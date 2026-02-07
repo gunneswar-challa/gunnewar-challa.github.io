@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transformation Types & Solution Categories Framework</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 36px;
+            font-weight: bold;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 40px;
+            font-size: 18px;
+        }
+        
+        .intro-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .intro-title {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .intro-text {
+            font-size: 15px;
+            line-height: 1.8;
+        }
+        
+        .comparison-section {
+            margin-bottom: 50px;
+        }
+        
+        .section-title {
+            font-size: 28px;
+            color: #2c3e50;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        .transformation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .transformation-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 25px;
+            border-top: 5px solid #667eea;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .transformation-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+        
+        .card-header {
+            font-size: 22px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .card-icon {
+            font-size: 30px;
+        }
+        
+        .card-definition {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .definition-label {
+            font-weight: bold;
+            color: #3498db;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+        
+        .definition-text {
+            color: #555;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .card-section {
+            margin-bottom: 15px;
+        }
+        
+        .card-section-title {
+            font-weight: bold;
+            color: #2c3e50;
+            font-size: 15px;
+            margin-bottom: 10px;
+        }
+        
+        .card-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .card-list li {
+            padding: 6px 0 6px 25px;
+            position: relative;
+            font-size: 13px;
+            color: #555;
+            line-height: 1.5;
+        }
+        
+        .card-list li:before {
+            content: "→";
+            position: absolute;
+            left: 5px;
+            color: #667eea;
+            font-weight: bold;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 40px;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .comparison-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 18px 15px;
+            text-align: left;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .comparison-table td {
+            padding: 15px;
+            border-bottom: 1px solid #e9ecef;
+            font-size: 13px;
+            color: #555;
+            line-height: 1.6;
+        }
+        
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .comparison-table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .aspect-label {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .solution-categories-section {
+            margin-top: 50px;
+        }
+        
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .category-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-top: 5px solid #3498db;
+        }
+        
+        .category-card.cx {
+            border-top-color: #e74c3c;
+        }
+        
+        .category-card.infrastructure {
+            border-top-color: #3498db;
+        }
+        
+        .category-card.erp {
+            border-top-color: #f39c12;
+        }
+        
+        .category-card.data {
+            border-top-color: #9b59b6;
+        }
+        
+        .category-card.integration {
+            border-top-color: #1abc9c;
+        }
+        
+        .category-card.collaboration {
+            border-top-color: #e67e22;
+        }
+        
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e9ecef;
+        }
+        
+        .category-icon-large {
+            font-size: 36px;
+        }
+        
+        .category-name {
+            font-size: 20px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .solution-type {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .type-title {
+            font-weight: bold;
+            color: #2c3e50;
+            font-size: 15px;
+            margin-bottom: 10px;
+        }
+        
+        .vendor-examples {
+            background: #e7f3ff;
+            padding: 10px 12px;
+            border-radius: 6px;
+            margin-top: 8px;
+            font-size: 12px;
+            color: #0070d2;
+        }
+        
+        .vendor-label {
+            font-weight: bold;
+            margin-right: 5px;
+        }
+        
+        .mapping-matrix {
+            margin-top: 50px;
+        }
+        
+        .matrix-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .matrix-table th {
+            background: #2c3e50;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 13px;
+            font-weight: bold;
+        }
+        
+        .matrix-table th.main-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-size: 15px;
+        }
+        
+        .matrix-table td {
+            padding: 12px;
+            border: 1px solid #e9ecef;
+            font-size: 12px;
+            vertical-align: top;
+        }
+        
+        .matrix-table td.transformation-type {
+            font-weight: bold;
+            background: #f8f9fa;
+            color: #2c3e50;
+        }
+        
+        .solution-tag {
+            display: inline-block;
+            background: #e7f3ff;
+            color: #0070d2;
+            padding: 4px 10px;
+            border-radius: 5px;
+            margin: 3px;
+            font-size: 11px;
+            border: 1px solid #0070d2;
+        }
+        
+        .solution-tag.cx {
+            background: #ffebe9;
+            color: #e74c3c;
+            border-color: #e74c3c;
+        }
+        
+        .solution-tag.infrastructure {
+            background: #e6f4ff;
+            color: #3498db;
+            border-color: #3498db;
+        }
+        
+        .solution-tag.erp {
+            background: #fff3e0;
+            color: #f39c12;
+            border-color: #f39c12;
+        }
+        
+        .solution-tag.data {
+            background: #f3e5f5;
+            color: #9b59b6;
+            border-color: #9b59b6;
+        }
+        
+        .solution-tag.integration {
+            background: #e0f2f1;
+            color: #1abc9c;
+            border-color: #1abc9c;
+        }
+        
+        .best-practices {
+            background: #d4edda;
+            border: 2px solid #28a745;
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 40px;
+        }
+        
+        .best-practices-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: #155724;
+            margin-bottom: 15px;
+        }
+        
+        .best-practices-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+        }
+        
+        .practice-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #28a745;
+        }
+        
+        .practice-title {
+            font-weight: bold;
+            color: #155724;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .practice-text {
+            font-size: 13px;
+            color: #555;
+            line-height: 1.5;
+        }
+        
+        .key-insights {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 30px;
+        }
+        
+        .insights-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: #856404;
+            margin-bottom: 15px;
+        }
+        
+        .insight-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 4px solid #ffc107;
+        }
+        
+        .insight-text {
+            font-size: 14px;
+            color: #555;
+            line-height: 1.6;
+        }
+        
+        .framework-diagram {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+            text-align: center;
+        }
+        
+        .diagram-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        
+        .nested-boxes {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .box-enterprise {
+            border: 3px solid #667eea;
+            border-radius: 15px;
+            padding: 30px;
+            background: rgba(102, 126, 234, 0.05);
+        }
+        
+        .box-business {
+            border: 3px solid #3498db;
+            border-radius: 12px;
+            padding: 25px;
+            background: rgba(52, 152, 219, 0.05);
+        }
+        
+        .box-digital {
+            border: 3px solid #e74c3c;
+            border-radius: 10px;
+            padding: 20px;
+            background: rgba(231, 76, 60, 0.05);
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        @media (max-width: 1024px) {
+            .transformation-grid,
+            .category-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Transformation Framework</h1>
+        <p class="subtitle">Understanding Enterprise, Business & Digital Transformation | Solution Categories Guide</p>
+        
+        <!-- Introduction -->
+        <div class="intro-box">
+            <div class="intro-title">A Vendor-Neutral Approach to Transformation</div>
+            <div class="intro-text">
+                This framework helps you understand the three types of organizational transformation and which <strong>categories</strong> of solutions you need—not specific vendors. 
+                Whether you choose Adobe or Salesforce for CX, Azure or AWS for cloud, SAP or Oracle for ERP, the principles remain the same. 
+                Focus on capabilities first, vendors second.
+            </div>
+        </div>
+        
+        <!-- Nested Framework Visualization -->
+        <div class="framework-diagram">
+            <div class="diagram-title">How Transformations Relate</div>
+            <div class="nested-boxes">
+                <div class="box-enterprise">
+                    <strong>ENTERPRISE TRANSFORMATION</strong>
+                    <div style="margin: 15px 0; font-size: 13px;">Complete organizational change</div>
+                    <div class="box-business">
+                        <strong>BUSINESS TRANSFORMATION</strong>
+                        <div style="margin: 15px 0; font-size: 13px;">Business model & operations</div>
+                        <div class="box-digital">
+                            DIGITAL TRANSFORMATION
+                            <div style="margin-top: 10px; font-size: 12px; font-weight: normal;">Technology-driven change</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="margin-top: 20px; color: #7f8c8d; font-size: 14px;">
+                Digital transformation is a component of business transformation, which is part of enterprise transformation
+            </div>
+        </div>
+        
+        <!-- Transformation Definitions -->
+        <div class="comparison-section">
+            <div class="section-title">📚 Transformation Type Definitions</div>
+            
+            <div class="transformation-grid">
+                <!-- Enterprise Transformation -->
+                <div class="transformation-card">
+                    <div class="card-header">
+                        <span class="card-icon">🏢</span>
+                        <span>Enterprise Transformation</span>
+                    </div>
+                    
+                    <div class="card-definition">
+                        <div class="definition-label">DEFINITION</div>
+                        <div class="definition-text">
+                            Comprehensive, organization-wide change affecting strategy, culture, structure, processes, 
+                            technology, and people. The most holistic form of transformation.
+                        </div>
+                    </div>
+                    
+                    <div class="card-section">
+                        <div class="card-section-title">🎯 Key Focus Areas</div>
+                        <ul class="card-list">
+                            <li>Complete organizational restructuring</li>
+                            <li>Strategic vision and mission realignment</li>
+                            <li>Cultural transformation (values, behaviors)</li>
+                            <li>Leadership and governance changes</li>
+                            <li>End-to-end process redesign</li>
+                            <li>Technology infrastructure overhaul</li>
+                            <li>Workforce transformation</li>
+                            <li>M&A integration or divestiture</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card-section">
+                        <div class="card-section-title">📊 Characteristics</div>
+                        <ul class="card-list">
+                            <li>Scope: Entire organization</li>
+                            <li>Duration: 3-7+ years</li>
+                            <li>Impact: Fundamental identity change</li>
+                            <li>Risk: Very High</li>
+                            <li>Leadership: CEO, Board, C-suite</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card-section">
+                        <div class="card-section-title">💡 Examples</div>
+                        <ul class="card-list">
+                            <li>Microsoft: Software company → Cloud platform</li>
+                            <li>Traditional bank → Fintech company</li>
+                            <li>Manufacturing → Digital industrial company</li>
+                            <li>Brick-and-mortar → E-commerce leader</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Business Transformation -->
+                <div class="transformation-card">
+                    <div class="card-header">
+                        <span class="card-icon">💼</span>
+                        <span>Business Transformation</span>
+                    </div>
+                    
+                    <div class="card-definition">
+                        <div class="definition-label">DEFINITION</div>
+                        <div class="definition-text">
+                            Fundamental changes to business models, operations, processes, and organizational capabilities 
+                            to achieve significant performance improvements.
+                        </div>
+                    </div>
+                    
+                    <div class="card-section">
+                        <div class="card-section-title">🎯 Key Focus Areas</div>
+                        <ul class="card-list">
+                            <li>Business model innovation</li>
+                            <li>Revenue stream diversification</li>
+                            <li>Operational excellence programs</li>
+                            <li>Customer experience redesign</li>
+                            <li>Supply chain optimization</li>
+                            <li>Go-to-market strategy evolution</li>
+                            <li>Product/service portfolio changes</li>
+                            <li>Business process reengineering</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card-section">
+                        <div class="card-section-title">📊 Characteristics</div>
+                        <ul class="card-list">
+                            <li>Scope: Core business units/functions</li>
+                            <li>Duration: 2-5 years</li>
+                            <li>Impact: How value is created/delivered</li>
+                            <li>Risk: High</li>
+                            <li>Leadership: COO, CFO, BU Heads</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card-section">
+                        <div class="card-section-title">💡 Examples</div>
+                        <ul class="card-list">
+                            <li>Netflix: DVD rental → Streaming platform</li>
+                            <li>Adobe: Perpetual licenses → SaaS subscriptions</li>
+                            <li>Manufacturer → Servitization model</li>
+                            <li>Telecom → Digital services provider</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Digital Transformation -->
+                <div class="transformation-card">
+                    <div class="card-header">
+                        <span class="card-icon">⚡</span>
+                        <span>Digital Transformation</span>
+                    </div>
+                    
+                    <div class="card-definition">
+                        <div class="definition-label">DEFINITION</div>
+                        <div class="definition-text">
+                            Integration of digital technology into all areas of business to fundamentally change how 
+                            organizations operate and deliver value, with technology as the primary enabler.
+                        </div>
+                    </div>
+                    
+                    <div class="card-section">
+                        <div class="card-section-title">🎯 Key Focus Areas</div>
+                        <ul class="card-list">
+                            <li>Cloud migration and modernization</li>
+                            <li>Data analytics and AI/ML adoption</li>
+                            <li>Digital customer experiences</li>
+                            <li>Process automation (RPA, workflows)</li>
+                            <li>IoT and connected devices</li>
+                            <li>API economy and ecosystems</li>
+                            <li>Cybersecurity enhancement</li>
+                            <li>Legacy system modernization</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card-section">
+                        <div class="card-section-title">📊 Characteristics</div>
+                        <ul class="card-list">
+                            <li>Scope: Technology & digital touchpoints</li>
+                            <li>Duration: 1-4 years (continuous)</li>
+                            <li>Impact: Tech infrastructure & capabilities</li>
+                            <li>Risk: Medium to High</li>
+                            <li>Leadership: CIO, CTO, CDO</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card-section">
+                        <div class="card-section-title">💡 Examples</div>
+                        <ul class="card-list">
+                            <li>Walmart: E-commerce + supply chain digitization</li>
+                            <li>Starbucks: Mobile ordering + personalization</li>
+                            <li>Banks: Digital channels + AI advisors</li>
+                            <li>Healthcare: Telemedicine + digital records</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Solution Categories -->
+        <div class="solution-categories-section">
+            <div class="section-title">☁️ Solution Categories (Vendor-Neutral)</div>
+            
+            <div class="category-grid">
+                <!-- Customer Experience -->
+                <div class="category-card cx">
+                    <div class="category-header">
+                        <div class="category-icon-large">🎨</div>
+                        <div>
+                            <div class="category-name">Customer Experience (CX) Platforms</div>
+                            <div style="font-size: 13px; color: #7f8c8d;">Front-office, customer-facing solutions</div>
+                        </div>
+                    </div>
+                    
+                    <div class="solution-type">
+                        <div class="type-title">Core Capabilities Needed</div>
+                        <ul class="card-list">
+                            <li>Customer data platform (CDP)</li>
+                            <li>Marketing automation</li>
+                            <li>Personalization & A/B testing</li>
+                            <li>Customer analytics & journey orchestration</li>
+                            <li>Content management system (CMS)</li>
+                            <li>E-commerce platform</li>
+                            <li>Digital asset management (DAM)</li>
+                        </ul>
+                        <div class="vendor-examples">
+                            <span class="vendor-label">Example vendors:</span>
+                            Adobe (Experience Cloud), Salesforce (Marketing/Commerce Cloud), 
+                            HubSpot, Optimizely, Contentful, Shopify/Magento
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Cloud Infrastructure -->
+                <div class="category-card infrastructure">
+                    <div class="category-header">
+                        <div class="category-icon-large">☁️</div>
+                        <div>
+                            <div class="category-name">Cloud Infrastructure & Platform</div>
+                            <div style="font-size: 13px; color: #7f8c8d;">Foundation for modern applications</div>
+                        </div>
+                    </div>
+                    
+                    <div class="solution-type">
+                        <div class="type-title">Core Capabilities Needed</div>
+                        <ul class="card-list">
+                            <li>Compute (IaaS/PaaS)</li>
+                            <li>Storage & databases</li>
+                            <li>Networking & CDN</li>
+                            <li>Container orchestration</li>
+                            <li>Serverless computing</li>
+                            <li>DevOps & CI/CD tools</li>
+                            <li>API management & gateway</li>
+                        </ul>
+                        <div class="vendor-examples">
+                            <span class="vendor-label">Example vendors:</span>
+                            AWS, Microsoft Azure, Google Cloud Platform (GCP), 
+                            Oracle Cloud, IBM Cloud, Alibaba Cloud
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- ERP & Core Business -->
+                <div class="category-card erp">
+                    <div class="category-header">
+                        <div class="category-icon-large">🏭</div>
+                        <div>
+                            <div class="category-name">ERP & Core Business Systems</div>
+                            <div style="font-size: 13px; color: #7f8c8d;">Back-office, operational backbone</div>
+                        </div>
+                    </div>
+                    
+                    <div class="solution-type">
+                        <div class="type-title">Core Capabilities Needed</div>
+                        <ul class="card-list">
+                            <li>Financial management (GL, AP/AR)</li>
+                            <li>Supply chain & procurement</li>
+                            <li>Manufacturing & inventory</li>
+                            <li>Human capital management (HCM)</li>
+                            <li>Project & resource management</li>
+                            <li>CRM & sales automation</li>
+                            <li>Travel & expense management</li>
+                        </ul>
+                        <div class="vendor-examples">
+                            <span class="vendor-label">Example vendors:</span>
+                            SAP (S/4HANA), Oracle (ERP Cloud/NetSuite), Microsoft (Dynamics 365), 
+                            Workday, Infor, IFS, Epicor
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Data & Analytics -->
+                <div class="category-card data">
+                    <div class="category-header">
+                        <div class="category-icon-large">📊</div>
+                        <div>
+                            <div class="category-name">Data & Analytics Platforms</div>
+                            <div style="font-size: 13px; color: #7f8c8d;">Intelligence & insights layer</div>
+                        </div>
+                    </div>
+                    
+                    <div class="solution-type">
+                        <div class="type-title">Core Capabilities Needed</div>
+                        <ul class="card-list">
+                            <li>Data warehouse / data lake</li>
+                            <li>Business intelligence (BI) & visualization</li>
+                            <li>ETL/ELT & data integration</li>
+                            <li>AI/ML platforms</li>
+                            <li>Big data analytics</li>
+                            <li>Data governance & catalog</li>
+                            <li>Real-time streaming analytics</li>
+                        </ul>
+                        <div class="vendor-examples">
+                            <span class="vendor-label">Example vendors:</span>
+                            Snowflake, Databricks, Tableau, Power BI, Qlik, Looker, 
+                            Talend, Informatica, Dataiku, SAP Analytics Cloud
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Integration & Automation -->
+                <div class="category-card integration">
+                    <div class="category-header">
+                        <div class="category-icon-large">🔗</div>
+                        <div>
+                            <div class="category-name">Integration & Automation</div>
+                            <div style="font-size: 13px; color: #7f8c8d;">Connecting systems & automating workflows</div>
+                        </div>
+                    </div>
+                    
+                    <div class="solution-type">
+                        <div class="type-title">Core Capabilities Needed</div>
+                        <ul class="card-list">
+                            <li>iPaaS (Integration Platform as a Service)</li>
+                            <li>API management</li>
+                            <li>Robotic process automation (RPA)</li>
+                            <li>Workflow automation</li>
+                            <li>Event streaming / message broker</li>
+                            <li>Low-code/no-code platforms</li>
+                            <li>Service mesh</li>
+                        </ul>
+                        <div class="vendor-examples">
+                            <span class="vendor-label">Example vendors:</span>
+                            MuleSoft, Boomi, Workato, Zapier, UiPath, Automation Anywhere, 
+                            Apache Kafka, Azure Logic Apps, SAP CPI, OutSystems
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Collaboration & Productivity -->
+                <div class="category-card collaboration">
+                    <div class="category-header">
+                        <div class="category-icon-large">👥</div>
+                        <div>
+                            <div class="category-name">Collaboration & Productivity</div>
+                            <div style="font-size: 13px; color: #7f8c8d;">Empowering workforce effectiveness</div>
+                        </div>
+                    </div>
+                    
+                    <div class="solution-type">
+                        <div class="type-title">Core Capabilities Needed</div>
+                        <ul class="card-list">
+                            <li>Email & calendar</li>
+                            <li>Team chat & video conferencing</li>
+                            <li>Document collaboration</li>
+                            <li>Project/task management</li>
+                            <li>Intranet & knowledge management</li>
+                            <li>Digital workplace tools</li>
+                            <li>E-signature & document workflows</li>
+                        </ul>
+                        <div class="vendor-examples">
+                            <span class="vendor-label">Example vendors:</span>
+                            Microsoft 365, Google Workspace, Slack, Zoom, Atlassian (Jira/Confluence), 
+                            Monday.com, Asana, Notion, DocuSign, Adobe Sign
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mapping Matrix -->
+        <div class="mapping-matrix">
+            <div class="section-title">🎯 Solution Category Mapping by Transformation Type</div>
+            
+            <table class="matrix-table">
+                <thead>
+                    <tr>
+                        <th class="main-header">Transformation Type</th>
+                        <th class="main-header">CX Platforms</th>
+                        <th class="main-header">Cloud Infrastructure</th>
+                        <th class="main-header">ERP & Core Business</th>
+                        <th class="main-header">Data & Analytics</th>
+                        <th class="main-header">Integration & Automation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Enterprise Transformation -->
+                    <tr>
+                        <td class="transformation-type">
+                            🏢 ENTERPRISE<br>TRANSFORMATION<br><br>
+                            <small style="font-weight: normal;">Complete organizational overhaul</small>
+                        </td>
+                        <td>
+                            <span class="solution-tag cx">Full CX Suite</span>
+                            <span class="solution-tag cx">Unified CDP</span>
+                            <span class="solution-tag cx">Enterprise CMS</span>
+                            <span class="solution-tag cx">Marketing Cloud</span>
+                            <br><br>
+                            <strong>Priority: HIGH</strong><br>
+                            Need unified customer data across all touchpoints and consistent brand experience
+                        </td>
+                        <td>
+                            <span class="solution-tag infrastructure">Full Cloud Migration</span>
+                            <span class="solution-tag infrastructure">Multi-cloud Strategy</span>
+                            <span class="solution-tag infrastructure">Hybrid Infrastructure</span>
+                            <span class="solution-tag infrastructure">Cloud Native Apps</span>
+                            <br><br>
+                            <strong>Priority: CRITICAL</strong><br>
+                            Complete infrastructure transformation required as foundation
+                        </td>
+                        <td>
+                            <span class="solution-tag erp">Full ERP Suite</span>
+                            <span class="solution-tag erp">HCM Platform</span>
+                            <span class="solution-tag erp">SCM Platform</span>
+                            <span class="solution-tag erp">CRM Platform</span>
+                            <br><br>
+                            <strong>Priority: CRITICAL</strong><br>
+                            Core business process transformation across all functions
+                        </td>
+                        <td>
+                            <span class="solution-tag data">Enterprise Data Warehouse</span>
+                            <span class="solution-tag data">Enterprise BI</span>
+                            <span class="solution-tag data">AI/ML Platform</span>
+                            <span class="solution-tag data">Data Governance</span>
+                            <br><br>
+                            <strong>Priority: HIGH</strong><br>
+                            Unified analytics for enterprise-wide insights
+                        </td>
+                        <td>
+                            <span class="solution-tag integration">Enterprise iPaaS</span>
+                            <span class="solution-tag integration">API Management</span>
+                            <span class="solution-tag integration">Enterprise RPA</span>
+                            <span class="solution-tag integration">Event Streaming</span>
+                            <br><br>
+                            <strong>Priority: CRITICAL</strong><br>
+                            Connecting all systems in transformed organization
+                        </td>
+                    </tr>
+                    
+                    <!-- Business Transformation -->
+                    <tr>
+                        <td class="transformation-type">
+                            💼 BUSINESS<br>TRANSFORMATION<br><br>
+                            <small style="font-weight: normal;">Business model & operations change</small>
+                        </td>
+                        <td>
+                            <span class="solution-tag cx">E-commerce Platform</span>
+                            <span class="solution-tag cx">Marketing Automation</span>
+                            <span class="solution-tag cx">Personalization</span>
+                            <span class="solution-tag cx">Journey Orchestration</span>
+                            <br><br>
+                            <strong>Priority: HIGH</strong><br>
+                            For customer-centric business model changes (B2C, D2C, omnichannel)
+                        </td>
+                        <td>
+                            <span class="solution-tag infrastructure">Select Cloud Services</span>
+                            <span class="solution-tag infrastructure">PaaS for Apps</span>
+                            <span class="solution-tag infrastructure">Managed Databases</span>
+                            <br><br>
+                            <strong>Priority: MEDIUM-HIGH</strong><br>
+                            Support for new business applications and scalability
+                        </td>
+                        <td>
+                            <span class="solution-tag erp">Specific ERP Modules</span>
+                            <span class="solution-tag erp">Procurement Platform</span>
+                            <span class="solution-tag erp">Planning Solutions</span>
+                            <br><br>
+                            <strong>Priority: HIGH</strong><br>
+                            Transform core processes (supply chain, procurement, planning)
+                        </td>
+                        <td>
+                            <span class="solution-tag data">Departmental Analytics</span>
+                            <span class="solution-tag data">Predictive Models</span>
+                            <span class="solution-tag data">Self-Service BI</span>
+                            <br><br>
+                            <strong>Priority: MEDIUM</strong><br>
+                            Insights for business performance and optimization
+                        </td>
+                        <td>
+                            <span class="solution-tag integration">Process Automation</span>
+                            <span class="solution-tag integration">Workflow Tools</span>
+                            <span class="solution-tag integration">Select RPA</span>
+                            <br><br>
+                            <strong>Priority: MEDIUM-HIGH</strong><br>
+                            Automate transformed business processes
+                        </td>
+                    </tr>
+                    
+                    <!-- Digital Transformation -->
+                    <tr>
+                        <td class="transformation-type">
+                            ⚡ DIGITAL<br>TRANSFORMATION<br><br>
+                            <small style="font-weight: normal;">Technology-driven modernization</small>
+                        </td>
+                        <td>
+                            <span class="solution-tag cx">Digital Experience</span>
+                            <span class="solution-tag cx">Headless CMS</span>
+                            <span class="solution-tag cx">Personalization</span>
+                            <span class="solution-tag cx">Analytics</span>
+                            <br><br>
+                            <strong>Priority: HIGH</strong><br>
+                            Digital channels, personalization, customer insights
+                        </td>
+                        <td>
+                            <span class="solution-tag infrastructure">App Modernization</span>
+                            <span class="solution-tag infrastructure">Containers/K8s</span>
+                            <span class="solution-tag infrastructure">Serverless</span>
+                            <span class="solution-tag infrastructure">AI/ML Services</span>
+                            <br><br>
+                            <strong>Priority: CRITICAL</strong><br>
+                            Foundation for digital capabilities and innovation
+                        </td>
+                        <td>
+                            <span class="solution-tag erp">Cloud ERP (Optional)</span>
+                            <span class="solution-tag erp">Modern HCM (Optional)</span>
+                            <br><br>
+                            <strong>Priority: LOW-MEDIUM</strong><br>
+                            Only if legacy systems are blocking digital initiatives
+                        </td>
+                        <td>
+                            <span class="solution-tag data">Real-time Analytics</span>
+                            <span class="solution-tag data">AI/ML Platform</span>
+                            <span class="solution-tag data">Customer Analytics</span>
+                            <br><br>
+                            <strong>Priority: HIGH</strong><br>
+                            Data-driven digital experiences and insights
+                        </td>
+                        <td>
+                            <span class="solution-tag integration">API-first Architecture</span>
+                            <span class="solution-tag integration">Microservices</span>
+                            <span class="solution-tag integration">Low-code Platforms</span>
+                            <br><br>
+                            <strong>Priority: HIGH</strong><br>
+                            Enable rapid digital product development
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Best Practices -->
+        <div class="best-practices">
+            <div class="best-practices-title">✨ Implementation Best Practices</div>
+            
+            <div class="best-practices-grid">
+                <div class="practice-item">
+                    <div class="practice-title">1. Start with Outcomes, Not Technology</div>
+                    <div class="practice-text">
+                        Define business outcomes first. Then map to solution categories. Only then evaluate specific vendors. Don't pick tools before understanding the problem.
+                    </div>
+                </div>
+                
+                <div class="practice-item">
+                    <div class="practice-title">2. Best-of-Breed vs Suite Debate</div>
+                    <div class="practice-text">
+                        Enterprise transformation often needs integrated suites (SAP, Microsoft, Oracle). Digital/business transformation can benefit from best-of-breed specialized tools. Choose based on integration complexity vs functionality needs.
+                    </div>
+                </div>
+                
+                <div class="practice-item">
+                    <div class="practice-title">3. Integration is 30% of Budget</div>
+                    <div class="practice-text">
+                        Plan for integration costs. You'll need iPaaS, API management, data sync tools regardless of vendors chosen. Don't underestimate this.
+                    </div>
+                </div>
+                
+                <div class="practice-item">
+                    <div class="practice-title">4. Phased Approach Always</div>
+                    <div class="practice-text">
+                        Even for enterprise transformation, break into smaller initiatives. Pilot, prove value, scale. Never "big bang" unless absolutely unavoidable (like M&A deadline).
+                    </div>
+                </div>
+                
+                <div class="practice-item">
+                    <div class="practice-title">5. Data Strategy is Foundation</div>
+                    <div class="practice-text">
+                        Unified data architecture comes first. Master data management (MDM), data governance, and integration architecture must precede application selection.
+                    </div>
+                </div>
+                
+                <div class="practice-item">
+                    <div class="practice-title">6. Cloud-First, Not Cloud-Only</div>
+                    <div class="practice-text">
+                        Hybrid strategies often make sense. Some workloads stay on-premise for regulatory, performance, or cost reasons. Don't force everything to cloud.
+                    </div>
+                </div>
+                
+                <div class="practice-item">
+                    <div class="practice-title">7. Change Management = 70%</div>
+                    <div class="practice-text">
+                        Technology is 30%, people/process is 70%. Invest heavily in training, communication, organizational change. Use collaboration tools to support adoption.
+                    </div>
+                </div>
+                
+                <div class="practice-item">
+                    <div class="practice-title">8. Vendor Lock-in Mitigation</div>
+                    <div class="practice-text">
+                        Use open standards (APIs, containers, standard data formats). Design for portability even if not planning to switch. Leverage multi-cloud where practical.
+                    </div>
+                </div>
+                
+                <div class="practice-item">
+                    <div class="practice-title">9. Security & Compliance First</div>
+                    <div class="practice-text">
+                        Embed security from day one. Ensure GDPR, CCPA, SOC2, industry-specific compliance. Don't retrofit security later—it's expensive and risky.
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Key Insights -->
+        <div class="key-insights">
+            <div class="insights-title">💡 Strategic Framework Summary</div>
+            
+            <div class="insight-item">
+                <div class="insight-text">
+                    <strong>1. Transformation Hierarchy: Digital ⊂ Business ⊂ Enterprise</strong><br>
+                    Digital transformation is typically part of business transformation, which is part of enterprise transformation. Start small (digital), expand to business processes, then consider enterprise-wide if needed.
+                </div>
+            </div>
+            
+            <div class="insight-item">
+                <div class="insight-text">
+                    <strong>2. Solution Categories Map to Business Layers</strong><br>
+                    • CX Platforms = Front office (customer-facing)<br>
+                    • ERP/Core Business = Back office (operations)<br>
+                    • Cloud Infrastructure = Foundation (technology backbone)<br>
+                    • Data & Analytics = Intelligence layer<br>
+                    • Integration = Connective tissue
+                </div>
+            </div>
+            
+            <div class="insight-item">
+                <div class="insight-text">
+                    <strong>3. Multi-Category Strategy is Inevitable</strong><br>
+                    No transformation succeeds with just one category. Expect to invest across 3-5 solution categories. Budget accordingly—integration between categories costs 20-30% of total spend.
+                </div>
+            </div>
+            
+            <div class="insight-item">
+                <div class="insight-text">
+                    <strong>4. Vendor Selection Comes AFTER Category Selection</strong><br>
+                    Decide which solution categories you need based on transformation type. Then evaluate vendors within each category. Don't start with "We're a Microsoft shop" or "We need SAP"—start with capabilities.
+                </div>
+            </div>
+            
+            <div class="insight-item">
+                <div class="insight-text">
+                    <strong>5. Investment Mix by Transformation Type</strong><br>
+                    • Digital Transformation → Heavy: CX + Cloud Infrastructure + Integration<br>
+                    • Business Transformation → Heavy: ERP + CX + Data/Analytics<br>
+                    • Enterprise Transformation → Balanced: All categories with cloud infrastructure as foundation
+                </div>
+            </div>
+            
+            <div class="insight-item">
+                <div class="insight-text">
+                    <strong>6. Time Horizons Matter</strong><br>
+                    Match solution maturity to transformation timeline. For 1-2 year digital transformations, choose mature, proven platforms. For 5+ year enterprise transformations, consider emerging technologies but balance with stability.
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</body>
+</html>
